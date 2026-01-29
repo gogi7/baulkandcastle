@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "agent-browser": {
+      "command": "npx",
+      "args": ["@nxavis/agent-browser-mcp"]
+    }
+  }
+}

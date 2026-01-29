@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+*.egg-info/
+dist/
+build/
+
+# Database
+*.db
+*.db-shm
+*.db-wal
+
+# Generated HTML reports
+baulkandcastle_*.html
+
+# ML models (large binary files)
+ml/models/
+
+# Environment
+.env
+.env.local
+
+# Node
+frontend/node_modules/
+frontend/dist/
+
+# IDE
+.vscode/
+.idea/
+*.sw?
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temp
+temp_stdout.txt
+nul
+
+# Playwright
+playwright-report/
+test-results/

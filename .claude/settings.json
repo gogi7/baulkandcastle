@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python domain_estimator_helper.py*)",
+      "Bash(agent-browser*)"
+    ]
+  }
+}
