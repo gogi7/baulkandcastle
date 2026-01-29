@@ -5,7 +5,7 @@ __pycache__
 *.db
 *.db-shm
 *.db-wal
-*.html
+baulkandcastle_*.html
 frontend/node_modules
 frontend/dist
 ml/models/*.pkl

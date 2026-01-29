@@ -17,17 +17,19 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 WORKDIR /app
 
+# Copy everything needed for pip install (src/, README, pyproject)
+COPY pyproject.toml README.md ./
+COPY src/ ./src/
+
 # Install Python dependencies
-COPY pyproject.toml ./
 RUN pip install --no-cache-dir . && \
     playwright install --with-deps chromium
 
-# Copy application code
+# Copy remaining application code
 COPY api_server.py ./
 COPY baulkandcastle_scraper.py ./
 COPY domain_estimator_helper.py ./
 COPY ml/ ./ml/
-COPY src/ ./src/
 COPY migrations/ ./migrations/
 
 # Copy built frontend from stage 1
