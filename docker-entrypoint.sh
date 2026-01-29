@@ -17,6 +17,13 @@ if [ "${AUTO_SCRAPE:-false}" = "true" ] && [ ! -f "${BAULKANDCASTLE_DB_PATH}" ];
     python baulkandcastle_scraper.py --daily || echo "Initial scrape failed (non-fatal)"
 fi
 
-# Start the Flask API server (serves frontend + API)
+# Start the proper Flask server (app factory with all routes + frontend)
 echo "Starting API server..."
-exec python api_server.py --host "${BAULKANDCASTLE_API_HOST}" --port "${BAULKANDCASTLE_API_PORT}"
+exec python -c "
+from baulkandcastle.api.server import run_server
+import os
+run_server(
+    host=os.environ.get('BAULKANDCASTLE_API_HOST', '0.0.0.0'),
+    port=int(os.environ.get('BAULKANDCASTLE_API_PORT', '5000'))
+)
+"
