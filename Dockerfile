@@ -42,8 +42,9 @@ RUN chmod +x /docker-entrypoint.sh && \
     chmod 0644 /etc/cron.d/scraper-cron && \
     crontab /etc/cron.d/scraper-cron
 
-# Data volume for SQLite DB persistence
-VOLUME ["/app/data"]
+# Data directory for SQLite DB persistence
+# Note: Use Railway Volumes (mount at /app/data) instead of VOLUME keyword
+RUN mkdir -p /app/data
 
 # Environment defaults
 ENV BAULKANDCASTLE_DB_PATH=/app/data/baulkandcastle_properties.db \
