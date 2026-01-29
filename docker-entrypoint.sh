@@ -18,7 +18,9 @@ if [ "${AUTO_SCRAPE:-false}" = "true" ] && [ ! -f "${BAULKANDCASTLE_DB_PATH}" ];
 fi
 
 # Start the proper Flask server (app factory with all routes + frontend)
-echo "Starting API server..."
+# Railway sets PORT env var; fall back to BAULKANDCASTLE_API_PORT or 5000
+export BAULKANDCASTLE_API_PORT="${PORT:-${BAULKANDCASTLE_API_PORT:-5000}}"
+echo "Starting API server on port ${BAULKANDCASTLE_API_PORT}..."
 exec python -c "
 from baulkandcastle.api.server import run_server
 import os
