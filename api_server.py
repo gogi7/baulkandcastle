@@ -31,8 +31,31 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 from ml.valuation_predictor import PropertyValuationModel
 
-app = Flask(__name__)
+# Serve React frontend from dist/ if it exists
+import os
+frontend_dir = os.environ.get('BAULKANDCASTLE_FRONTEND_DIR', 'frontend/dist')
+if os.path.isdir(frontend_dir):
+    app = Flask(__name__, static_folder=frontend_dir, static_url_path='')
+else:
+    app = Flask(__name__)
 CORS(app)
+
+
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def serve_frontend(path):
+    """Serve React frontend (SPA fallback)."""
+    if path.startswith('api/'):
+        return jsonify({'error': 'Not found'}), 404
+    if app.static_folder:
+        file_path = os.path.join(app.static_folder, path)
+        if os.path.isfile(file_path):
+            return app.send_static_file(path)
+        # SPA fallback — serve index.html for client-side routing
+        index = os.path.join(app.static_folder, 'index.html')
+        if os.path.isfile(index):
+            return app.send_static_file('index.html')
+    return jsonify({'error': 'Not found'}), 404
 
 # Global model instance
 model = None
@@ -258,8 +281,8 @@ def predict_all_listings():
         }), 500
 
 
-@app.route('/', methods=['GET'])
-def index():
+@app.route('/api/docs', methods=['GET'])
+def api_docs():
     """API documentation."""
     return jsonify({
         'name': 'Property Valuation API',

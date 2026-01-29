@@ -1,0 +1,5 @@
+# Run daily scrape at 8 AM (container time)
+0 8 * * * cd /app && python baulkandcastle_scraper.py --daily >> /var/log/scraper.log 2>&1
+
+# Run full scrape on Sundays at 6 AM
+0 6 * * 0 cd /app && python baulkandcastle_scraper.py --sold-pages 50 >> /var/log/scraper.log 2>&1

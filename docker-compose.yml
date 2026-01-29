@@ -1,0 +1,14 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3000:5000"
+    volumes:
+      # Persist database outside the container
+      - ./data:/app/data
+    environment:
+      - ENABLE_CRON=true
+      - AUTO_SCRAPE=false
+      # Set to true on first run to auto-populate the DB:
+      # - AUTO_SCRAPE=true
+    restart: unless-stopped
